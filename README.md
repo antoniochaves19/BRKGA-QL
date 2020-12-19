@@ -11,7 +11,7 @@ The C++ code of this algorithm has been designed to be easy of reuse. Users can 
 When using this algorithm in academic studies, please refer to the following works:
 
 [1] Chaves, A.A. and Lorena, L.H.N. (2020)
-An Adaptive and near Parameter-free BRKGAusing Reinforcement Learning, Technical Report. 
+An Adaptive and near Parameter-free BRKGA using Reinforcement Learning, Technical Report. 
 (Available in https://arxiv.org/...  in technical report form).
 
 
