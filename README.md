@@ -12,7 +12,7 @@ When using this algorithm in academic studies, please refer to the following wor
 
 [1] Chaves, A.A. and Lorena, L.H.N. (2020)
 An Adaptive and near Parameter-free BRKGA using Reinforcement Learning, Technical Report. 
-(Available in https://arxiv.org/...  in technical report form).
+(Available in http://www.optimization-online.org/DB_HTML/2021/02/8260.html  in technical report form).
 
 
 ## Scope
