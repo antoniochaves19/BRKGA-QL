@@ -5,110 +5,110 @@
 *************************************************************************************/
 int main()
 {
-    // file with test instances
+	// file with test instances
 	FILE *arqProblems;
-    arqProblems = fopen ("arqProblems.csv", "r"); 
+	arqProblems = fopen ("arqProblems.csv", "r"); 
 
-    if (arqProblems == NULL)
-    {
-        printf("\nERROR: File arqProblems.txt not found\n");
-        getchar();
-        exit(1);
-    }
+	if (arqProblems == NULL)
+	{
+		printf("\nERROR: File arqProblems.txt not found\n");
+		getchar();
+		exit(1);
+	}
 
-    char nameTable[100];
-    fgets(nameTable, sizeof(nameTable), arqProblems); //read first line of arqProblems file
+	char nameTable[100];
+	fgets(nameTable, sizeof(nameTable), arqProblems); //read first line of arqProblems file
 
-    // best solution that is saved in out file
-    TSol sBest;
+	// best solution that is saved in out file
+	TSol sBest;
 
 	// run the A-BRKGA for all test instances
 	while (!feof(arqProblems))
 	{
 		// read the name of instances, debug mode, local search module, maximum time, maximum number of runs, maximum number of threads
 		fscanf(arqProblems,"%s %d %d %d %d %d", nameTable, &debug, &ls, &MAXTIME, &MAXRUNS, &MAX_THREADS);
-        strcpy(instance,nameTable);
+		strcpy(instance,nameTable);
         
 		//read the informations of the instance
-        ReadData(nameTable, n, node, dist);
+		ReadData(nameTable, n, node, dist);
 
-        double foBest = INFINITY,
-               foAverage = 0;
+		double foBest = INFINITY,
+		       foAverage = 0;
 
-        float timeBest = 0,
-              timeTotal = 0;
+		float timeBest = 0,
+		      timeTotal = 0;
 
-        std::vector <double> fos;
-        fos.clear();
+		std::vector <double> fos;
+		fos.clear();
 
-        // best solutions found in MAXRUNS
-        sBest.fo = INFINITY;
+		// best solutions found in MAXRUNS
+		sBest.fo = INFINITY;
 
 		// run ABRKGA MaxRuns for each instance
-        printf("\n\nInstance: %s \nRun: ", instance);
-        for (int j=0; j<MAXRUNS; j++)
-        {
-            // fixed seed
-            srand(j+1); 
-            //srand(time(NULL));
+		printf("\n\nInstance: %s \nRun: ", instance);
+		for (int j=0; j<MAXRUNS; j++)
+		{
+		    // fixed seed
+		    srand(j+1); 
+		    //srand(time(NULL));
 
-            printf("%d ", j+1);
-            CPUbegin = CPUend = CPUbest = clock();
-            gettimeofday(&Tstart, NULL);
-            gettimeofday(&Tend, NULL);
-            gettimeofday(&Tbest, NULL);
+		    printf("%d ", j+1);
+		    CPUbegin = CPUend = CPUbest = clock();
+		    gettimeofday(&Tstart, NULL);
+		    gettimeofday(&Tend, NULL);
+		    gettimeofday(&Tbest, NULL);
 
-            // best solution found in this run
-            bestSolution.fo = INFINITY;
+		    // best solution found in this run
+		    bestSolution.fo = INFINITY;
 
-            // execute the evolutionary method
-            BRKGA();
+		    // execute the evolutionary method
+		    BRKGA();
 
-            CPUend = clock();
-            gettimeofday(&Tend, NULL);
+		    CPUend = clock();
+		    gettimeofday(&Tend, NULL);
 
-            // output results
-            if (bestSolution.fo < sBest.fo)
-                sBest = bestSolution;
+		    // output results
+		    if (bestSolution.fo < sBest.fo)
+			sBest = bestSolution;
 
-            // calculate best and average results
-            if (bestSolution.fo < foBest)
-                foBest = bestSolution.fo;
+		    // calculate best and average results
+		    if (bestSolution.fo < foBest)
+			foBest = bestSolution.fo;
 
-            foAverage += bestSolution.fo;
+		    foAverage += bestSolution.fo;
 
-            // fitness of each solution found in the runs
-            fos.push_back(bestSolution.fo);
+		    // fitness of each solution found in the runs
+		    fos.push_back(bestSolution.fo);
 
-            //timeBest += (float)(CPUbest - CPUbegin)/CLOCKS_PER_SEC;
-            //timeTotal += (float)(CPUend - CPUbegin)/CLOCKS_PER_SEC;
-            timeBest += ((Tbest.tv_sec  - Tstart.tv_sec) * 1000000u + Tbest.tv_usec - Tstart.tv_usec) / 1.e6;
-            timeTotal += ((Tend.tv_sec  - Tstart.tv_sec) * 1000000u + Tend.tv_usec - Tstart.tv_usec) / 1.e6; 
-        }
+		    //timeBest += (float)(CPUbest - CPUbegin)/CLOCKS_PER_SEC;
+		    //timeTotal += (float)(CPUend - CPUbegin)/CLOCKS_PER_SEC;
+		    timeBest += ((Tbest.tv_sec  - Tstart.tv_sec) * 1000000u + Tbest.tv_usec - Tstart.tv_usec) / 1.e6;
+		    timeTotal += ((Tend.tv_sec  - Tstart.tv_sec) * 1000000u + Tend.tv_usec - Tstart.tv_usec) / 1.e6; 
+		}
 
-        // create a .xls file with average results
-        foAverage = foAverage / MAXRUNS;
-        timeBest = timeBest / MAXRUNS;
-        timeTotal = timeTotal / MAXRUNS;
+		// create a .xls file with average results
+		foAverage = foAverage / MAXRUNS;
+		timeBest = timeBest / MAXRUNS;
+		timeTotal = timeTotal / MAXRUNS;
 
-        if (!debug)
-        {
-        	WriteSolution(sBest, n, timeBest, timeTotal, instance);
-        	WriteResults(foBest, foAverage, fos, timeBest, timeTotal, instance);
-        }
-        else
-        {
-            WriteSolutionScreen(sBest, n, timeBest, timeTotal, instance);
-        }
+		if (!debug)
+		{
+			WriteSolution(sBest, n, timeBest, timeTotal, instance);
+			WriteResults(foBest, foAverage, fos, timeBest, timeTotal, instance);
+		}
+		else
+		{
+		    WriteSolutionScreen(sBest, n, timeBest, timeTotal, instance);
+		}
 
-        // free memory of problem variables
-        FreeMemory();
-        FreeMemoryProblem(node, dist);
-        //FreeMemoryProblem();
-    }
+		// free memory of problem variables
+		FreeMemory();
+		FreeMemoryProblem(node, dist);
+		//FreeMemoryProblem();
+	}
 
-    fclose(arqProblems);
-    return 0;
+    	fclose(arqProblems);
+	return 0;
 }
 
 
@@ -126,7 +126,6 @@ void BRKGA()
     PopInter.clear();
 
     // population size
-    //p = 1000;
     p = sizeP[sizeof(sizeP)/sizeof(sizeP[0]) - 1]; //higher population size
 
     Pop.resize(p);
@@ -261,23 +260,8 @@ void BRKGA()
         else
         {
             stagnation++; 
-
             R = 0; 
-            //R = 0.2 - gap;
-
-            /*if (averageFitness < lastAvgFitness) // && randomico(0,1) < 0.1)
-                R = 0;
-            else
-                R = -1;*/
         }
-
-        /*if (debug)
-        {
-            FILE *arquivo;
-            arquivo = fopen("Reward.txt","a");
-            fprintf(arquivo, "\n%d \t %d",numGenerations, R);
-            fclose(arquivo);
-        }*/
         
         // Update the values of Q-Table
         UpdateQTable();
@@ -286,18 +270,18 @@ void BRKGA()
         if (ls)
         {
             // number of local search runs
-			numLS = 0;
+	    numLS = 0;
             
             //apply local search when BRKGA found a new better solution or when the BRKGA don't found a better solution in T generations
-	        if (R >= 1 || stagnation > 10) 
-	        {
+	    if (R >= 1 || stagnation > 10) 
+	    {
                 stagnation = 0;
 
 	            // Find commuties in Top chromossoms
 	            IC((int)(p*pe));
 
 	            std::vector <int> promisingSol; 
-                promisingSol.clear();
+                    promisingSol.clear();
 
 	            for (int i=0; i < (int)(p*pe); i++)
 	            {
@@ -305,34 +289,20 @@ void BRKGA()
 	                {
 	                	promisingSol.push_back(i);
 	                }
-                    /*else
-                    {
-                        beta = randomico(0.05, 0.10);
-                        Pop[i] = Perturbation(Pop[i],beta);
-                        Pop[i] = Decoder(Pop[i],n,dist);
-
-                        // set flag as 0 to permit new local search
-                        Pop[i].flag = 0;
-                    }*/
 	            }
 
-                //promisingSol.resize(MAX_THREADS);
-
 	            #pragma omp parallel for num_threads(MAX_THREADS)
-                for (unsigned int i=0; i < promisingSol.size(); i++)
-                {
-                    // local search not influence the evolutionary process
-                    TSol s = LocalSearch(Pop[promisingSol[i]], n, dist);
-                    updateBestSolution(s);
-                    numLS++;
+		    for (unsigned int i=0; i < promisingSol.size(); i++)
+		    {
+			    // local search not influence the evolutionary process
+			    TSol s = LocalSearch(Pop[promisingSol[i]], n, dist);
+			    updateBestSolution(s);
+			    numLS++;
 
-                    // set flag as 1 to prevent new local search in the same solution
-                    Pop[promisingSol[i]].flag = 1;
-                }
-                promisingSol.clear();
-
-                // Sort population in increase order of fitness
-                //sort(Pop.begin(), Pop.end(), sortByFitness);
+			    // set flag as 1 to prevent new local search in the same solution
+			    Pop[promisingSol[i]].flag = 1;
+		     }
+		     promisingSol.clear();
 	        }
 	    }
 
@@ -394,7 +364,7 @@ void BRKGA()
 
     // free memory
     Pop.clear();
-	PopInter.clear();
+    PopInter.clear();
     Q.clear();
 }
 
@@ -500,17 +470,6 @@ void InitiateQTable()
         Q[aux.S].push_back(aux);
         qTotal += aux.q;
     }
-
-    // imprimir Q
-    /*for (int q=0; q<Q.size(); q++)
-    {
-        printf("\n");
-        for (int j=0; j<Q[q].size(); j++)
-        {
-            printf("[%.2lf %.2lf %d] \t ", Q[q][j].pVar, Q[q][j].q, Q[q][j].k);
-        }
-    }
-    getchar();*/
 }
 
 void ChooseAction(int numGeneration)
@@ -681,29 +640,10 @@ void UpdateQTable()
             {
                 Q[s][a].q += lf*(R + df*Q[s+1][aMax].q - Q[s][a].q );
             }
-
-            //SARSA
-            /*if (s == par-1)
-            {
-                Q[s][a].q += lf*(R + df*Q[0][aP1].q - Q[s][a].q );
-            }
-            else
-            {
-                Q[s][a].q += lf*(R + df*Q[s+1][aP1].q - Q[s][a].q );
-            }*/
-            
-            //Q[j][a].q += lf*(R + df*Q[j][aMax].q - Q[j][a].q );
-            //Q[s][a].q += (1.0/(Q[s][a].k  + 1)) * (R + 1 - Q[s][a].q);
-            //Q[j][a].q += lf*(R + (1.0/(Q[j][a].k  + 1))*Q[j][aMax].q - Q[j][a].q );
         }
 
         Q[s][a].k++;
         qTotal += Q[s][a].q;
-
-        /*if (j>0)
-            printf("[%d %.2lf %.2lf %4d] \t ", Q[j][a].S, Q[j][a].pVar, Q[j][a].q, Q[j][a].k);
-        else
-            printf("[%d %.0lf %.2lf %4d] \t ", Q[j][a].S, Q[j][a].pVar, Q[j][a].q, Q[j][a].k);*/
     }
     //printf("%.3lf \n", qTotal);
 }
@@ -713,29 +653,29 @@ TSol CreateInitialSolutions()
 	TSol s;
 	TVecSol aux;
 
-    s.vec.clear();
+        s.vec.clear();
 
 	// create a random-key for each allelo (consider decoder type in the n-th random-key)
 	for (int j = 0; j < n+1; j++)
 	{
 		aux.rk  = randomico(0,1);
-        if (j < n)
+        	if (j < n)
 		    aux.sol = j;
-        else
-            aux.sol = -1;
+        	else
+            	    aux.sol = -1;
 
-        s.vec.push_back(aux);
+        	s.vec.push_back(aux);
 	}
 
-    // flag to control the local search memory
-    s.flag = 0;
+    	// flag to control the local search memory
+    	s.flag = 0;
 
 	return s;
 }
 
 TSol Perturbation(TSol s, double beta)
 {
-	for (int k=0; k<n*beta; k++)
+    for (int k=0; k<n*beta; k++)
     {        
         // choose two random positions
         int pos1, pos2;
@@ -754,10 +694,10 @@ TSol Perturbation(TSol s, double beta)
 
 TSol ParametricUniformCrossover(int Tpe)
 {	
-	TSol s;
+    TSol s;
 
-	// create a new offspring
-	s.vec.resize(n+1);
+    // create a new offspring
+    s.vec.resize(n+1);
 
     // Select an elite parent:
     int eliteParent = irandomico(0,Tpe - 1);
@@ -809,8 +749,8 @@ double PearsonCorrelation(std::vector <TVecSol> X, std::vector <TVecSol> Y)
     return correlation;
 }
 
-void writeLPGraph(std::vector<std::vector<std::pair<int, double> > > &listaArestas) {
-	
+void writeLPGraph(std::vector<std::vector<std::pair<int, double> > > &listaArestas) 
+{	
 	// Colocar id dos grupos entre 1 e n
 	int i, j;
 	int n = listaArestas.size();
@@ -827,7 +767,7 @@ void writeLPGraph(std::vector<std::vector<std::pair<int, double> > > &listaArest
 	}
 
 	// Dá um nome ao arquivo .json (LP-<generation>.json)
-    numLP++;
+        numLP++;
 	std::string jsonfile = "LP-";
 	jsonfile += std::to_string(numLP);
 	jsonfile += ".json";
@@ -944,12 +884,8 @@ void IC(int Tpe)
 	// apply clustering method
 	LP(listaArestas);
 
-    /*if (debug) {
-		writeLPGraph(listaArestas);
-	}*/
-
 	PromisingLP(Tpe);
-    listaArestas.clear();
+        listaArestas.clear();
 }
 
 void LP(std::vector<std::vector<std::pair<int, double> > > listaArestas)
@@ -963,14 +899,6 @@ void LP(std::vector<std::vector<std::pair<int, double> > > listaArestas)
 	// initialize each node with its own label
 	for (int i = 0; i < nk; i++)
 		Pop[i].label = i;
-
-	/*if (debug) {
-		cout << "\n\n=================\n= Resultados LP =\n=================\n";
-		cout << "Grupos iniciais:" << endl;
-		for (int i = 0; i < nk; i++)
-			cout << Pop[i].label << " ";
-		cout << endl;
-	}*/
 
 	int iteracao = 1;
 	int labelVizinho, melhorLabel;
@@ -1014,15 +942,6 @@ void LP(std::vector<std::vector<std::pair<int, double> > > listaArestas)
 		}
 		iteracao++;
 	}
-
-	/*if (debug) {
-		std::cout << "Iteracoes: " << iteracao << std::endl;
-		std::cout << "Grupos Finais:" << std::endl;
-		for (int i = 0; i < nk; i++)
-			std::cout << Pop[i].label << " ";
-		std::cout << std::endl;
-		std::cout << "=================\n";
-	}*/
     ordemVisita.clear();
 }
 
