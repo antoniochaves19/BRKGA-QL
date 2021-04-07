@@ -14,6 +14,7 @@ When using this algorithm in academic studies, please refer to the following wor
 An Adaptive and near Parameter-free BRKGA using Reinforcement Learning, Technical Report. 
 (Available in http://www.optimization-online.org/DB_HTML/2021/02/8260.html  in technical report form).
 
+This research article was accepted to be published in the CEC 2021.
 
 ## Scope
 
