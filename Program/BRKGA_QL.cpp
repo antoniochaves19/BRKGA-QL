@@ -1,7 +1,7 @@
 #include "BRKGA_QL.h"
 
 /************************************************************************************
-								MAIN FUNCTION AREA
+				MAIN FUNCTION AREA
 *************************************************************************************/
 int main()
 {
@@ -205,7 +205,7 @@ void BRKGA()
         for (int i = (int)(p*pe); i < p - (int)(p*pm); i++)
         {
             // Parametric uniform crossover
-        	PopInter[i] = ParametricUniformCrossover((int)(p*pe));
+            PopInter[i] = ParametricUniformCrossover((int)(p*pe));
             PopInter[i] = Decoder(PopInter[i],n,dist);
 
             // save the best solution found in this run
@@ -252,7 +252,6 @@ void BRKGA()
         {
             bestFitness = bestOffspring;
             bestGeneration = numGenerations;
-            //R = 1 + abs(gap);
             R = 1 + abs(gap);
 
             stagnation = 0;
@@ -331,7 +330,7 @@ void BRKGA()
         // print screen
         if (debug){
             printf("\nGeneration: %3d [%4d - %3d(%.2lf) (%3d) - %3d(%.2lf) - (%.2lf)] \t %.2lf  \t %.2lf [%.4lf] \t %.2lf",
-                        numGenerations, p, (int)(p*pe), pe, numLS, (int)(p*pm), pm, rhoe, bestSolution.fo, bestFitness, R, averageOffspring);
+                      numGenerations, p, (int)(p*pe), pe, numLS, (int)(p*pm), pm, rhoe, bestSolution.fo, bestFitness, R, averageOffspring);
         }
 
         // terminate the evolutionary process in MAXTIME
@@ -342,9 +341,7 @@ void BRKGA()
         //currentTime = (float)(CPUend - CPUbegin)/CLOCKS_PER_SEC;
         
         // stop criterium
-        if (currentTime >= MAXTIME)
-        {
-            //printf("\n\nTempo Corrente: %lf \t Tempo maximo: %d", currentTime, MAXTIME);
+        if (currentTime >= MAXTIME){
             break;
         }
     }
@@ -392,7 +389,7 @@ void InitiateQTable()
         TQ aux;
         aux.S = 0;
         aux.pVar = sizeP[j];
-        aux.q = 0; //randomico(1.0,1.0);
+        aux.q = 0; 
         aux.k = 0;
 
         Q[aux.S].push_back(aux);
@@ -416,7 +413,7 @@ void InitiateQTable()
         TQ aux;
         aux.S = 2;
         aux.pVar = Pm[j];
-        aux.q = 0; //randomico(1.0,1.0);
+        aux.q = 0; 
         aux.k = 0;
 
         Q[aux.S].push_back(aux);
@@ -428,7 +425,7 @@ void InitiateQTable()
         TQ aux;
         aux.S = 3;
         aux.pVar = Rhoe[j];
-        aux.q = 0; //randomico(1.0,1.0);
+        aux.q = 0; 
         aux.k = 0;
 
         Q[aux.S].push_back(aux);
@@ -440,7 +437,7 @@ void InitiateQTable()
         TQ aux;
         aux.S = 4;
         aux.pVar = Epsilon[j];
-        aux.q = 0; //randomico(1.0,1.0);
+        aux.q = 0; 
         aux.k = 0;
 
         Q[aux.S].push_back(aux);
@@ -452,7 +449,7 @@ void InitiateQTable()
         TQ aux;
         aux.S = 5;
         aux.pVar = LF[j];
-        aux.q = 0; //randomico(1.0,1.0);
+        aux.q = 0;
         aux.k = 0;
 
         Q[aux.S].push_back(aux);
@@ -464,7 +461,7 @@ void InitiateQTable()
         TQ aux;
         aux.S = 6;
         aux.pVar = DF[j];
-        aux.q = 0; //randomico(1.0,1.0);
+        aux.q = 0; 
         aux.k = 0;
 
         Q[aux.S].push_back(aux);
@@ -628,13 +625,12 @@ void UpdateQTable()
         qTotal -= Q[s][a].q;
 
         // update Q-Table only if R = 1
-        //if (1) 
         if (R > 0)
         {
             //Q-Learning
             if (s == par-1)
             {
-                Q[s][a].q += lf*(R + df*qTermination - Q[s][a].q ); //Q[0][aMax].q
+                Q[s][a].q += lf*(R + df*qTermination - Q[s][a].q ); 
             }
             else
             {
@@ -775,7 +771,7 @@ void writeLPGraph(std::vector<std::vector<std::pair<int, double> > > &listaArest
 	// Cria o arquivo do grafo (.json)
 	int totalArestas = 0;
 	std::string json = "{\n  \"nodes\": [\n";
-	for (i = 0; i < listaArestas.size(); i++) {			// Insere vértices
+	for (i = 0; i < listaArestas.size(); i++) {			
 		totalArestas += listaArestas[i].size();
 		if(i == listaArestas.size() - 1)
 			json += "    {\"id\": \"" + std::to_string(i) + "\", \"group\": " + std::to_string(Pop[i].label) + "}\n";
@@ -947,7 +943,7 @@ void LP(std::vector<std::vector<std::pair<int, double> > > listaArestas)
 
 void PromisingLP(int Tpe)
 {
-    std::vector <int> grupos;
+    	std::vector <int> grupos;
 	int tamanhoGrupos = 0;
 
 	// initialize promisings solutions
@@ -957,7 +953,7 @@ void PromisingLP(int Tpe)
 	// save labels defined by LP in groups
 	int achei;
 
-    for (int i = 0; i < Tpe; i++)
+    	for (int i = 0; i < Tpe; i++)
 	{
 		achei = 0;
 		for (unsigned int j = 0; j < grupos.size(); j++)
@@ -987,7 +983,7 @@ void PromisingLP(int Tpe)
 					local = i;
 
 				// we not apply local search in this solution yet
-                if (Pop[i].fo < menorFO && Pop[i].flag == 0) 
+                		if (Pop[i].fo < menorFO && Pop[i].flag == 0) 
 				{
 					menorFO = Pop[i].fo;
 					localMenor = i;
@@ -1013,11 +1009,11 @@ void FreeMemory()
 
 double randomico(double min, double max)
 {
-	return ((double)(rand()%10000)/10000.0)*(max-min)+min;
+    return ((double)(rand()%10000)/10000.0)*(max-min)+min;
     //return uniform_real_distribution<double>(min, max)(rng);
 }
 
 int irandomico(int min, int max)
 {
-	return (int)randomico(0,max-min+1.0) + min;
+    return (int)randomico(0,max-min+1.0) + min;
 }
