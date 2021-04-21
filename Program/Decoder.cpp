@@ -86,46 +86,46 @@ TSol Dec2(TSol s, int n, std::vector < std::vector <double> > dist) // 2-Opt
         j = i + 2;
         while (((j+1)%t) != i)
         {
-        int vi  = s.vec[i].sol;
-        int vi1 = s.vec[(i+1)%t].sol;
-        int vj  = s.vec[j%t].sol;
-        int vj1 = s.vec[(j+1)%t].sol;
+			int vi  = s.vec[i].sol;
+			int vi1 = s.vec[(i+1)%t].sol;
+			int vj  = s.vec[j%t].sol;
+			int vj1 = s.vec[(j+1)%t].sol;
 
-        foOpt = - dist[vi][vi1]
-                - dist[vj][vj1]
-                + dist[vi][vj]
-                + dist[vi1][vj1];
+			foOpt = - dist[vi][vi1]
+					- dist[vj][vj1]
+					+ dist[vi][vj]
+					+ dist[vi1][vj1];
 
-        if (foOpt < 0)
-        {
-            // first improvement strategy
-            Mi1 = (i+1)%t;
-            Mj  = j%t;
+			if (foOpt < 0)
+			{
+				// first improvement strategy
+				Mi1 = (i+1)%t;
+				Mj  = j%t;
 
-            int inicio = Mi1,
-                fim = Mj;
+				int inicio = Mi1,
+					fim = Mj;
 
-            int tam, p1, p2, aux;
+				int tam, p1, p2, aux;
 
-            if(inicio > fim)
-                tam = t - inicio + fim + 1;
-            else
-                tam = fim - inicio + 1;
+				if(inicio > fim)
+					tam = t - inicio + fim + 1;
+				else
+					tam = fim - inicio + 1;
 
-            p1=inicio;
-            p2=fim;
+				p1=inicio;
+				p2=fim;
 
-            for(int k=0; k < tam/2; k++)
-            {
-                aux = s.vec[p1%t].sol;
-                s.vec[p1%t].sol = s.vec[p2%t].sol;
-                s.vec[p2%t].sol = aux;
+				for(int k=0; k < tam/2; k++)
+				{
+					aux = s.vec[p1%t].sol;
+					s.vec[p1%t].sol = s.vec[p2%t].sol;
+					s.vec[p2%t].sol = aux;
 
-                p1 = (p1==t-1)?0:p1+1;
-                p2 = (p2 == 0)?t-1:p2-1;
-            }
-        }
-        j++;
+					p1 = (p1==t-1)?0:p1+1;
+					p2 = (p2 == 0)?t-1:p2-1;
+				}
+			}
+			j++;
         }//while
     }//for
     return s;
