@@ -3,7 +3,7 @@
 TSol LocalSearch(TSol s, int n, std::vector < std::vector <double> > dist)
 {
     // we use a Random Variable Neighborhood Descent (RVND) as local search
-	int k = 1;
+    int k = 1;
 
     // predefined number of neighborhood moves
     std::vector <int> NSL;
@@ -14,13 +14,8 @@ TSol LocalSearch(TSol s, int n, std::vector < std::vector <double> > dist)
         NSLAux.push_back(i);
     }
 
-    //perturbar a solucao
-    if (rand(0,1) < 0.5)
-    {
-    }
-
     //printf("\nHeuristicas: ");
-	while (!NSL.empty())
+    while (!NSL.empty())
 	{
         // current objective function
         double foCurrent = s.fo;
@@ -65,20 +60,6 @@ TSol LocalSearch(TSol s, int n, std::vector < std::vector <double> > dist)
             NSL.erase(NSL.begin()+pos);
         }
 	} //end while
-
-    // convert the solution found by the local search in a random-key vector
-    /*TSol randomKey = s,
-         route = s;
-
-    // sort random-key vector 
-    sort(randomKey.vec.begin(), randomKey.vec.end()-1, sortByRk); 
-
-    for (int i=0; i<n; i++)
-    {
-        s.vec[route.vec[i].sol].rk = randomKey.vec[i].rk;
-    }  
-
-    s.vec[n].rk = 0.01;*/
 
  	return s;
 }
