@@ -14,7 +14,7 @@ void WriteSolutionScreen(TSol s, int n, float timeBest, float timeTotal, char in
 	for (int i=0; i<n; i++)
 		printf("%d ", s.vec[i].sol);
 
-    printf("\nDecoder: %.2lf",s.vec[n].rk);
+    	printf("\nDecoder: %.2lf",s.vec[n].rk);
 	printf("\nfo: %.5lf",s.fo);
 	printf("\nTotal time: %.3f",timeTotal);
 	printf("\nBest time: %.3f\n\n",timeBest);
@@ -25,7 +25,7 @@ void WriteSolutionScreen(TSol s, int n, float timeBest, float timeTotal, char in
 void WriteSolution(TSol s, int n, float timeBest, float timeTotal, char instance[])
 {
 	FILE *arquivo;
-    arquivo = fopen("../Results/Solutions.txt","a");
+    	arquivo = fopen("../Results/Solutions.txt","a");
 
 	if (!arquivo)
 	{
@@ -34,7 +34,7 @@ void WriteSolution(TSol s, int n, float timeBest, float timeTotal, char instance
 		exit(1);
 	}
 
-    fprintf(arquivo,"\n\nInstance: %s", instance);
+    	fprintf(arquivo,"\n\nInstance: %s", instance);
 	fprintf(arquivo,"\nSol: ");
 	for (int i=0; i<n; i++)
 		fprintf(arquivo,"%d ", s.vec[i].sol);
@@ -48,7 +48,7 @@ void WriteSolution(TSol s, int n, float timeBest, float timeTotal, char instance
 void WriteResults(double fo, double foAverage, std::vector <double> fos, float timeBest, float timeTotal, char instance[])
 {
 	FILE *arquivo;
-    arquivo = fopen("../Results/Results.csv","a");
+    	arquivo = fopen("../Results/Results.csv","a");
 
 	if (!arquivo)
 	{
@@ -58,9 +58,9 @@ void WriteResults(double fo, double foAverage, std::vector <double> fos, float t
 	}
 
 	fprintf(arquivo,"\n%s", instance);
-    fprintf(arquivo,"\t%d", (int)fos.size());
-    for (int i=0; i<fos.size(); i++)
-        fprintf(arquivo,"\t%lf", fos[i]);
+    	fprintf(arquivo,"\t%d", (int)fos.size());
+    	for (int i=0; i<fos.size(); i++)
+        	fprintf(arquivo,"\t%lf", fos[i]);
 	fprintf(arquivo,"\t%lf", fo);
 	fprintf(arquivo,"\t%lf", foAverage);
 	fprintf(arquivo,"\t%.3f", timeBest);
