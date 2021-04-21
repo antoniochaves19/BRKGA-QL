@@ -48,8 +48,7 @@ void ReadData(char nameTable[], int &n, std::vector <TNode>& node, std::vector <
     {
     	for (int j=i; j<nAux; j++)
     	{
-    		dist[i][j] = dist[j][i] = (floor (sqrt( (node[j].x - node[i].x) * (node[j].x - node[i].x) +
-    										        (node[j].y - node[i].y) * (node[j].y - node[i].y) ) + 0.5 ) )/1.0;
+    		dist[i][j] = dist[j][i] = (floor (sqrt( (node[j].x - node[i].x) * (node[j].x - node[i].x) + (node[j].y - node[i].y) * (node[j].y - node[i].y) ) + 0.5 ) )/1.0;
     	}
     }
     
