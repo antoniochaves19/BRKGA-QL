@@ -1,14 +1,13 @@
-all : runTest
+all: runTest
 
 CCC = g++
-#CCFLAGS = -O3 -Wall -std=c++11
 CCFLAGS = -O3 -openmp -Wall -std=c++11
 TARGETDIR=.
 
 OBJS2 = \
-		$(TARGETDIR)/BRKGA_QL.o \
+	$(TARGETDIR)/BRKGA_QL.o \
         $(TARGETDIR)/Read.o \
-		$(TARGETDIR)/Decoder.o \
+	$(TARGETDIR)/Decoder.o \
         $(TARGETDIR)/LocalSearch.o
 
 $(TARGETDIR)/runTest: $(OBJS2)
@@ -32,7 +31,7 @@ test: runTest
 clean:
 	$(RM) \
 	$(TARGETDIR)/BRKGA_QL.o \
-    $(TARGETDIR)/Read.o \
+	$(TARGETDIR)/Read.o \
 	$(TARGETDIR)/Decoder.o \
-    $(TARGETDIR)/LocalSearch.o 
+   	$(TARGETDIR)/LocalSearch.o 
      
