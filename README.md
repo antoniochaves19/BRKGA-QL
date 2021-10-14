@@ -15,6 +15,7 @@ An Adaptive and near Parameter-free BRKGA using Reinforcement Learning, Technica
 (Available in http://www.optimization-online.org/DB_HTML/2021/02/8260.html  in technical report form).
 
 This research article was published in the CEC 2021:  https://doi.org/10.1109/CEC45853.2021.9504766
+
 CHAVES,  A. A.;  LORENA,  L. H.N. An adaptiveand near parameter-free BRKGA using Q-Learning method. In: 2021 IEEE Congress on Evolutionary Computation (CEC), 2021. p. 2331–2338.
 
 ## Scope
